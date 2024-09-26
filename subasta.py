@@ -6,6 +6,7 @@
 # Mi= numero maximo de acciones a comprar
 from FUERZABRUTASUBASTA.FUERZABRUTA_SUB import fuerza_bruta_sub_aux
 from DINAMICASUB.DinamicaSub import subasta_programacion_dinamica
+from VORAZSUBASTA.VorazSub import subasta_voraz
 
 def subasta():
     
@@ -25,11 +26,14 @@ def subasta():
     
     print("1. Fuerza Bruta")
     print("2. Programacion Dinamica")
+    print("3. Programación voraz")
     opcion = int(input("Elija una opcion: "))
     if opcion == 1:
         fuerza_bruta_sub_aux(A, B, ofertas)
     elif opcion == 2:
         subasta_programacion_dinamica(A, B, ofertas)
+    elif opcion == 3:
+        subasta_voraz(A, B, ofertas)
         
    
         
