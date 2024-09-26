@@ -17,7 +17,7 @@ def programacion_dinamica(palabra1, palabra2):
 
             if cursor1 < m and cursor2 < t:
                 dp[cursor1][cursor2] = min(dp[cursor1][cursor2], dp[cursor1 + 1][cursor2 + 1] + r)  # Reemplazar
-S
+
             if cursor1 < m:
                 dp[cursor1][cursor2] = min(dp[cursor1][cursor2], dp[cursor1 + 1][cursor2] + d)  # Borrar
 
