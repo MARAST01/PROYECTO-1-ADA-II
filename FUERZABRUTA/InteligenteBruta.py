@@ -1,8 +1,28 @@
 #from main import delete, replace, insertar, kill
 def caracteres_a_array(cadena):
         return [c for c in cadena]
+
+def delete(cursor, arreglo):
+    nuevo_arreglo = arreglo[:cursor] + arreglo[cursor + 1:]  # Crear copia sin el carácter eliminado
+    return nuevo_arreglo
+
+# Función replace (reemplazar un carácter)
+def replace(cursor, arreglo, caracter):
+    nuevo_arreglo = arreglo[:]
+    nuevo_arreglo[cursor] = caracter  # Crear copia con el carácter reemplazado
+    return nuevo_arreglo
+
+# Función insert (insertar un carácter)
+def insertar(cursor, arreglo, caracter):
+    nuevo_arreglo = arreglo[:cursor] + [caracter] + arreglo[cursor:]  # Crear copia con el carácter insertado
+    return nuevo_arreglo
+
+# Función kill (eliminar todo desde el cursor hasta el final)
+def kill(cursor, arreglo):
+    nuevo_arreglo = arreglo[:cursor]  # Crear copia truncada
+    return nuevo_arreglo
     
-def fuerza_bruta(palabra1, palabra2, caracteres_a_array):
+def fuerza_bruta(palabra1, palabra2, caracteres_a_array,i,d,r,a,k):
     
 
     palabra1 = caracteres_a_array(palabra1)

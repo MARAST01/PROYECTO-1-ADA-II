@@ -1,5 +1,5 @@
 # Función para calcular el costo mínimo de transformar palabra1 en palabra2
-def programacion_dinamica(palabra1, palabra2):
+def programacion_dinamica(palabra1, palabra2, i, d, r, a, k):
     m = len(palabra1)
     t = len(palabra2)
 
