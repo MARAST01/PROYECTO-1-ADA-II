@@ -1,34 +1,41 @@
 
-
-def fuerza_bruta_sub(A, B, ofertas, idx=0):
-    # Caso base: Si no hay más oferentes, asignamos todas las acciones al gobierno
-    if idx == len(ofertas):
-        return A * B, [A]  # El gobierno compra todas las acciones restantes
-
-    # Datos del oferente actual
-    pi, mi, Mi = ofertas[idx]
+def fuerza_bruta_iterativa(A, B, ofertas):
+    n = len(ofertas)
     
-    # Inicializamos el valor máximo y la mejor asignación
-    valor_maximo = -float('inf')
-    mejor_asignacion = []
+    # Inicializamos una tabla para almacenar los resultados
+    # dp[i][j] será el valor máximo que se puede obtener con i acciones y los primeros j oferentes
+    dp = [[0] * (n + 1) for _ in range(A + 1)]
+    
+    # Inicializamos un array para rastrear la mejor asignación
+    asignaciones = [[[] for _ in range(n + 1)] for _ in range(A + 1)]
 
-    # Probar todas las posibles asignaciones de acciones para este oferente
-    for xi in range(mi, min(Mi, A) + 1):
-        # Llamada recursiva para los oferentes restantes
-        valor_restante, asignacion_restante = fuerza_bruta_sub(A - xi, B, ofertas, idx + 1)
+    # Iteramos sobre cada oferente
+    for j in range(1, n + 1):
+        pi, mi, Mi = ofertas[j - 1]  # Ofertas es 0-indexado
 
-        # Calcular el valor total si asignamos xi acciones al oferente actual
-        valor_actual = xi * pi + valor_restante
+        # Iteramos sobre la cantidad de acciones disponibles
+        for i in range(A + 1):
+            # Sin asignar acciones al oferente actual
+            dp[i][j] = dp[i][j - 1]
+            asignaciones[i][j] = asignaciones[i][j-1] + [0]
 
-        # Actualizar si encontramos una mejor solución
-        if valor_actual > valor_maximo:
-            valor_maximo = valor_actual
-            mejor_asignacion = [xi] + asignacion_restante
+            # Probar asignar xi acciones al oferente actual
+            for xi in range(mi, min(Mi, i) + 1):
+                valor_actual = xi * pi + dp[i - xi][j - 1]
+                
+                # Si encontramos un mejor valor, actualizamos
+                if valor_actual > dp[i][j]:
+                    dp[i][j] = valor_actual
+                    asignaciones[i][j] = asignaciones[i - xi][j - 1] + [xi]
+   
+    # Si sobran acciones, el gobierno compra a un precio B
+    acciones_sobrantes = A - sum(asignaciones[A][n])
+    if acciones_sobrantes > 0:
+        dp[A][n] += acciones_sobrantes * B
+        asignaciones[A][n].append(acciones_sobrantes)
+    else:
+        asignaciones[A][n].append(0)
 
-    return valor_maximo, mejor_asignacion
-
-# Función para encontrar la mejor asignación de acciones
-def fuerza_bruta_sub_aux(A, B, ofertas):
-    max_valor, mejor_asignacion = fuerza_bruta_sub(A, B, ofertas)
-    print(max_valor)
-    print(mejor_asignacion)
+    # El valor máximo se encuentra en dp[A][n]
+    print("Valor máximo:", dp[A][n])
+    print("Mejor asignación:", asignaciones[A][n])

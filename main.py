@@ -1,5 +1,5 @@
 from terminal import terminal
-from subasta import subasta
+from subasta import subastaVentana
 
 
 print("1. Terminal inteligente")
@@ -8,4 +8,10 @@ opcion = int(input("Elija una opcion: "))
 if opcion == 1:
         terminal()
 elif opcion == 2:
-        subasta()
+       subastaVentana()
+        
+
+else:
+        print("Opcion no valida")
+        exit()
+        
