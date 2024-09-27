@@ -1,72 +1,47 @@
-#from main import delete, replace, insertar, kill
-def caracteres_a_array(cadena):
-        return [c for c in cadena]
+def fuerza_bruta(palabra1, palabra2, cursor1, cursor2, i, d, r, a, k): 
+    # Caso base: cuando ambas palabras han sido procesadas completamente
+    if cursor1 == len(palabra1) and cursor2 == len(palabra2):
+        return 0, []
 
-def delete(cursor, arreglo):
-    nuevo_arreglo = arreglo[:cursor] + arreglo[cursor + 1:]  # Crear copia sin el carácter eliminado
-    return nuevo_arreglo
+    # Caso base: cuando la primera palabra se ha terminado
+    if cursor1 == len(palabra1):
+        acciones = ["Insertar ({})-> {}".format(palabra2[k], i) for k in range(cursor2, len(palabra2))]
+        return (len(palabra2) - cursor2) * i, acciones
 
-# Función replace (reemplazar un carácter)
-def replace(cursor, arreglo, caracter):
-    nuevo_arreglo = arreglo[:]
-    nuevo_arreglo[cursor] = caracter  # Crear copia con el carácter reemplazado
-    return nuevo_arreglo
+    # Caso base: cuando la segunda palabra se ha terminado
+    if cursor2 == len(palabra2):
+        acciones = ["Borrar ({})-> {}".format(palabra1[k], d) for k in range(cursor1, len(palabra1))]
+        return (len(palabra1) - cursor1) * d, acciones
 
-# Función insert (insertar un carácter)
-def insertar(cursor, arreglo, caracter):
-    nuevo_arreglo = arreglo[:cursor] + [caracter] + arreglo[cursor:]  # Crear copia con el carácter insertado
-    return nuevo_arreglo
+    # Reemplazar, insertar y borrar, se calcula el costo mínimo de cada acción
+    costo_reemplazar, acciones_reemplazar = fuerza_bruta(palabra1, palabra2, cursor1 + 1, cursor2 + 1, i, d, r, a, k)
+    costo_insertar, acciones_insertar = fuerza_bruta(palabra1, palabra2, cursor1, cursor2 + 1, i, d, r, a, k)
+    costo_borrar, acciones_borrar = fuerza_bruta(palabra1, palabra2, cursor1 + 1, cursor2, i, d, r, a, k)
 
-# Función kill (eliminar todo desde el cursor hasta el final)
-def kill(cursor, arreglo):
-    nuevo_arreglo = arreglo[:cursor]  # Crear copia truncada
-    return nuevo_arreglo
-    
-def fuerza_bruta(palabra1, palabra2, caracteres_a_array,i,d,r,a,k):
-    
+    costo_reemplazar += r
+    costo_insertar += i
+    costo_borrar += d
 
-    palabra1 = caracteres_a_array(palabra1)
-    palabra2 = caracteres_a_array(palabra2)
-    
-    # Función recursiva para encontrar el costo mínimo
-    def aux_bruto(palabra1, palabra2, cursor1, cursor2, costo):
-        # Caso base: si ambas palabras se han procesado completamente
-        if cursor1 == len(palabra1) and cursor2 == len(palabra2):
-            return costo  # Ambas palabras se han procesado completamente
+    # Nueva opción: kill lo que queda de palabra1 y luego insertar lo que queda de palabra2
+    costo_kill = (len(palabra1) - cursor1) * k + (len(palabra2) - cursor2) * i
+    acciones_kill = ["kill ({}) -> {}".format(palabra1[k], k) for k in range(cursor1, len(palabra1))] + \
+                    ["Insertar ({})-> {}".format(palabra2[k], i) for k in range(cursor2, len(palabra2))]
 
-        # Si palabra1 se terminó pero palabra2 no, hay que insertar lo que falta
-        if cursor1 == len(palabra1):
-            return costo + i * (len(palabra2) - cursor2)  # Insertar caracteres restantes
-
-        # Si palabra2 se terminó pero palabra1 no, hay que borrar lo que sobra
-        if cursor2 == len(palabra2):
-            return costo + d * (len(palabra1) - cursor1)  # Borrar caracteres restantes
-
-        # Casos recursivos: evaluar todas las operaciones posibles en cada paso
-
-        # Opción 1: Insertar un carácter en palabra1
-        palabrai = insertar(cursor1, palabra1, palabra2[cursor2])
-        costo_insertar = aux_bruto(palabrai, palabra2, cursor1 + 1, cursor2 + 1, costo + i)
-
-        # Opción 2: Borrar un carácter de palabra1
-        palabrad = delete(cursor1, palabra1)
-        costo_borrar = aux_bruto(palabrad, palabra2, cursor1, cursor2, costo + d)
-
-        # Opción 3: Reemplazar un carácter en palabra1
-        palabrar = replace(cursor1, palabra1, palabra2[cursor2])
-        costo_reemplazar = aux_bruto(palabrar, palabra2, cursor1 + 1, cursor2 + 1, costo + r)
-
-        # Opción 4: Eliminar todo desde el cursor en palabra1
-        palabrak = kill(cursor1, palabra1)
-        costo_kill = aux_bruto(palabrak, palabra2, cursor1, cursor2, costo + k)
-
-        # Opción 5: Avanzar si los caracteres son iguales
-        if palabra1[cursor1] == palabra2[cursor2]:
-            costo_avanzar = aux_bruto(palabra1, palabra2, cursor1 + 1, cursor2 + 1, costo + a)
-            return min(costo_insertar, costo_borrar, costo_reemplazar, costo_kill, costo_avanzar)
+    # Si las letras son iguales, se decide si avanzar o reemplazar (ya que reemplazar también avanza)
+    if palabra1[cursor1] == palabra2[cursor2]:
+        # Decidir si avanzar o reemplazar cuando las letras son iguales
+        if a <= r:
+            costo, acciones = fuerza_bruta(palabra1, palabra2, cursor1 + 1, cursor2 + 1, i, d, r, a, k)
+            return costo + a, ["Avanzar ({} == {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], a)] + acciones
         else:
-            return min(costo_insertar, costo_borrar, costo_reemplazar, costo_kill)
+            return costo_reemplazar, ["Reemplazar ({} -> {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], r)] + acciones_reemplazar
 
-    # Llamar a la función recursiva inicial
-    return aux_bruto(palabra1, palabra2, 0, 0, 0)
-
+    # Seleccionar la acción con el costo mínimo
+    if costo_reemplazar <= costo_insertar and costo_reemplazar <= costo_borrar and costo_reemplazar <= costo_kill:
+        return costo_reemplazar, ["Reemplazar ({} -> {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], r)] + acciones_reemplazar
+    elif costo_insertar <= costo_borrar and costo_insertar <= costo_kill:
+        return costo_insertar, ["Insertar ({}) -> {}".format(palabra2[cursor2], i)] + acciones_insertar
+    elif costo_borrar <= costo_kill:
+        return costo_borrar, ["Borrar ({}) -> {}".format(palabra1[cursor1], d)] + acciones_borrar
+    else:
+        return costo_kill, acciones_kill
