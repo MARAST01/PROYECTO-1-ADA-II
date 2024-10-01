@@ -25,6 +25,7 @@ def subastaVentana():
              abrir_ventana_ofertas(n, A, B, )
         except ValueError:
            messagebox.showerror("Error", "Por favor, ingresa números válidos.")
+           
     def abrir_ventana_ofertas(n, A, B):
         # Crear una nueva ventana
         ventana_ofertas = tk.Toplevel(root)
