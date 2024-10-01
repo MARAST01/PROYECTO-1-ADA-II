@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import PhotoImage, font  
+import os
+iconos_dir = os.path.join(os.path.dirname(__file__), 'ICONOS')
 
 #──── ✧《VENTANA PRINCIPAL》✧ ────#
 root = tk.Tk()
@@ -30,22 +32,22 @@ custom_font_button = font.Font(family="Helvetica", size=10, weight="bold")
 custom_font_title = font.Font(family="Times New Roman", size=30, weight="bold")
 
 # íconos contenedor costos
-avanzar = PhotoImage(file='adelante.png') 
-borrar = PhotoImage(file='borrar.png') 
-reemplazar = PhotoImage(file='reemplazar.png') 
-insertar = PhotoImage(file='insertar.png') 
-kill = PhotoImage(file='dead.png') 
+avanzar = PhotoImage(file=os.path.join(iconos_dir, 'avanzar.png'))
+borrar = PhotoImage(file=os.path.join(iconos_dir, 'borrar.png'))
+reemplazar = PhotoImage(file=os.path.join(iconos_dir, 'reemplazar.png')) 
+insertar = PhotoImage(file=os.path.join(iconos_dir, 'insertar.png')) 
+kill = PhotoImage(file=os.path.join(iconos_dir, 'dead.png')) 
 
 # íconos contenedor frame_boton_soluciones
-icono_sol_ingenua = PhotoImage(file='ingenua.png') 
-icono_sol_voraz = PhotoImage(file='voraz.png') 
-icono_sol_dinamica = PhotoImage(file='dinamica.png') 
+icono_sol_ingenua = PhotoImage(file=os.path.join(iconos_dir, 'ingenua.png')) 
+icono_sol_voraz = PhotoImage(file=os.path.join(iconos_dir, 'voraz.png')) 
+icono_sol_dinamica = PhotoImage(file=os.path.join(iconos_dir, 'dinamica.png')) 
 
 # íconos contenedor frame_datos
-icono_atras = PhotoImage(file='atras.png')
-icono_grafica = PhotoImage(file='grafica.png')
-icono_tiempo = PhotoImage(file='tiempo.png')
-icono_ver = PhotoImage(file='ver.png')
+icono_atras = PhotoImage(file=os.path.join(iconos_dir, 'atras.png'))
+icono_grafica = PhotoImage(file=os.path.join(iconos_dir, 'grafica.png'))
+icono_tiempo = PhotoImage(file=os.path.join(iconos_dir, 'tiempo.png'))
+icono_ver = PhotoImage(file=os.path.join(iconos_dir, 'ver.png'))
 #──── ✧《✩》✧ ────#
 
 #──── ✧《TITULO》✧ ────#
