@@ -1,72 +1,60 @@
-#from main import delete, replace, insertar, kill
-def caracteres_a_array(cadena):
-        return [c for c in cadena]
-
-def delete(cursor, arreglo):
-    nuevo_arreglo = arreglo[:cursor] + arreglo[cursor + 1:]  # Crear copia sin el carácter eliminado
-    return nuevo_arreglo
-
-# Función replace (reemplazar un carácter)
-def replace(cursor, arreglo, caracter):
-    nuevo_arreglo = arreglo[:]
-    nuevo_arreglo[cursor] = caracter  # Crear copia con el carácter reemplazado
-    return nuevo_arreglo
-
-# Función insert (insertar un carácter)
-def insertar(cursor, arreglo, caracter):
-    nuevo_arreglo = arreglo[:cursor] + [caracter] + arreglo[cursor:]  # Crear copia con el carácter insertado
-    return nuevo_arreglo
-
-# Función kill (eliminar todo desde el cursor hasta el final)
-def kill(cursor, arreglo):
-    nuevo_arreglo = arreglo[:cursor]  # Crear copia truncada
-    return nuevo_arreglo
+def fuerza_bruta(palabra1, palabra2, cursor1, cursor2, i, d, r, a, k): 
+    # Caso base: cuando ambas palabras han sido procesadas completamente
+    if cursor1 == len(palabra1) and cursor2 == len(palabra2):
+        return 0, []
     
-def fuerza_bruta(palabra1, palabra2, caracteres_a_array,i,d,r,a,k):
+    # Caso base: cuando la primera palabra se ha terminado
+    if cursor1 == len(palabra1):
+        acciones = ["Insertar ({})-> {}".format(palabra2[j], i) for j in range(cursor2, len(palabra2))]
+        return (len(palabra2) - cursor2) * i, acciones
     
-
-    palabra1 = caracteres_a_array(palabra1)
-    palabra2 = caracteres_a_array(palabra2)
+    # Caso base: cuando la segunda palabra se ha terminado
+    # Caso base: cuando la segunda palabra se ha terminado
+    if cursor2 == len(palabra2):
+        # Costo de borrar cada letra desde cursor1 hasta el final
+        costo_borrar = (len(palabra1) - cursor1) * d
+        acciones_borrar = ["Borrar ({})-> {}".format(palabra1[j], d) for j in range(cursor1, len(palabra1))]
     
-    # Función recursiva para encontrar el costo mínimo
-    def aux_bruto(palabra1, palabra2, cursor1, cursor2, costo):
-        # Caso base: si ambas palabras se han procesado completamente
-        if cursor1 == len(palabra1) and cursor2 == len(palabra2):
-            return costo  # Ambas palabras se han procesado completamente
-
-        # Si palabra1 se terminó pero palabra2 no, hay que insertar lo que falta
-        if cursor1 == len(palabra1):
-            return costo + i * (len(palabra2) - cursor2)  # Insertar caracteres restantes
-
-        # Si palabra2 se terminó pero palabra1 no, hay que borrar lo que sobra
-        if cursor2 == len(palabra2):
-            return costo + d * (len(palabra1) - cursor1)  # Borrar caracteres restantes
-
-        # Casos recursivos: evaluar todas las operaciones posibles en cada paso
-
-        # Opción 1: Insertar un carácter en palabra1
-        palabrai = insertar(cursor1, palabra1, palabra2[cursor2])
-        costo_insertar = aux_bruto(palabrai, palabra2, cursor1 + 1, cursor2 + 1, costo + i)
-
-        # Opción 2: Borrar un carácter de palabra1
-        palabrad = delete(cursor1, palabra1)
-        costo_borrar = aux_bruto(palabrad, palabra2, cursor1, cursor2, costo + d)
-
-        # Opción 3: Reemplazar un carácter en palabra1
-        palabrar = replace(cursor1, palabra1, palabra2[cursor2])
-        costo_reemplazar = aux_bruto(palabrar, palabra2, cursor1 + 1, cursor2 + 1, costo + r)
-
-        # Opción 4: Eliminar todo desde el cursor en palabra1
-        palabrak = kill(cursor1, palabra1)
-        costo_kill = aux_bruto(palabrak, palabra2, cursor1, cursor2, costo + k)
-
-        # Opción 5: Avanzar si los caracteres son iguales
-        if palabra1[cursor1] == palabra2[cursor2]:
-            costo_avanzar = aux_bruto(palabra1, palabra2, cursor1 + 1, cursor2 + 1, costo + a)
-            return min(costo_insertar, costo_borrar, costo_reemplazar, costo_kill, costo_avanzar)
+        # Costo de la operación kill
+        costo_kill = k
+        acciones_kill = ["Kill ({}) -> {}".format(palabra1[cursor1:], k)]
+    
+        # Comparar costos y elegir la acción más barata
+        if costo_kill < costo_borrar:
+            return costo_kill, acciones_kill
         else:
-            return min(costo_insertar, costo_borrar, costo_reemplazar, costo_kill)
+            return costo_borrar, acciones_borrar
 
-    # Llamar a la función recursiva inicial
-    return aux_bruto(palabra1, palabra2, 0, 0, 0)
+    
+    # Reemplazar, insertar y borrar, se calcula el costo mínimo de cada acción
+    costo_reemplazar, acciones_reemplazar = fuerza_bruta(palabra1, palabra2, cursor1 + 1, cursor2 + 1, i, d, r, a, k)
+    costo_insertar, acciones_insertar = fuerza_bruta(palabra1, palabra2, cursor1, cursor2 + 1, i, d, r, a, k)
+    costo_borrar, acciones_borrar = fuerza_bruta(palabra1, palabra2, cursor1 + 1, cursor2, i, d, r, a, k)
+    
+    costo_reemplazar += r
+    costo_insertar += i
+    costo_borrar += d
 
+    # Opción de 'kill': elimina todo lo que queda de palabra1 y luego inserta lo que queda de palabra2
+    costo_kill = (len(palabra1) - cursor1) * k + (len(palabra2) - cursor2) * i
+    acciones_kill = ["Kill ({}) -> {}".format(palabra1[j], k) for j in range(cursor1, len(palabra1))] + \
+                    ["Insertar ({})-> {}".format(palabra2[j], i) for j in range(cursor2, len(palabra2))]
+
+    # Si las letras son iguales, decidir si avanzar o reemplazar
+    if palabra1[cursor1] == palabra2[cursor2]:
+        if a <= r:
+            costo, acciones = fuerza_bruta(palabra1, palabra2, cursor1 + 1, cursor2 + 1, i, d, r, a, k)
+            return costo + a, ["Avanzar ({} == {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], a)] + acciones
+        else:
+            return costo_reemplazar, ["Reemplazar ({} -> {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], r)] + acciones_reemplazar
+
+    # Comparar todos los costos (reemplazar, insertar, borrar, kill) y escoger la opción con el costo mínimo
+    opciones = [(costo_reemplazar, acciones_reemplazar, "Reemplazar ({} -> {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], r)),
+                (costo_insertar, acciones_insertar, "Insertar ({}) -> {}".format(palabra2[cursor2], i)),
+                (costo_borrar, acciones_borrar, "Borrar ({}) -> {}".format(palabra1[cursor1], d)),
+                (costo_kill, acciones_kill, "Kill ({}) -> {}".format(palabra1[cursor1], k))]
+
+    # Seleccionar la acción con el costo mínimo
+    costo_minimo, acciones_minimas, accion = min(opciones, key=lambda x: x[0])
+
+    return costo_minimo, [accion] + acciones_minimas
