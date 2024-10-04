@@ -3,7 +3,7 @@
 def programacion_dinamica(palabra1, palabra2, i, d, r, a, k):
     m = len(palabra1)
     t = len(palabra2)
-
+ 
     # Inicializamos una tabla DP de tamaño (m+1) x (t+1) para almacenar los costos
     dp = [[float('inf')] * (t + 1) for _ in range(m + 1)]
     movimientos = [[[] for _ in range(t + 1)] for _ in range(m + 1)]
