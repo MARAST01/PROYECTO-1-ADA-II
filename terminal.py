@@ -1,22 +1,21 @@
 from DINAMICA.InteligenteDinamica import programacion_dinamica
 from FUERZABRUTA.InteligenteBruta import fuerza_bruta
 from vorazterminal.terminal_voraz import programacion_voraz
-
+ 
 # Costos
 a = 1  # avanzar
 d = 2  # borrar
-r = 1  # reemplazar
+r = 3  # reemplazar
 i = 2  # insertar
-k = 3  # matar
+k = 1  # matar
 
 
 
 
 # Función delete (borrar un carácter)
 
-
-palabra1 = "o"
-palabra2 = "o"
+palabra1 = "algorithm"
+palabra2 = "altruistic"
 
 def terminal():
     print("Elige el método de transformación:")

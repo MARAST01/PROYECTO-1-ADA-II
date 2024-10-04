@@ -196,4 +196,4 @@ btn_atras.pack(pady=(10, 0))  # Lo colocamos en el frame_datos
 
 #──── ✧《✩》✧ ────#
 
-root.mainloop()
+

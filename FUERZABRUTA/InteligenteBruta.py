@@ -3,7 +3,7 @@ def fuerza_bruta(palabra1, palabra2, cursor1, cursor2, i, d, r, a, k):
     if cursor1 == len(palabra1) and cursor2 == len(palabra2):
         return 0, []
     
-    # Caso base: cuando la primera palabra se ha terminado
+    # Caso base: cuando  la primera palabra se ha terminado
     if cursor1 == len(palabra1):
         acciones = ["Insertar ({})-> {}".format(palabra2[j], i) for j in range(cursor2, len(palabra2))]
         return (len(palabra2) - cursor2) * i, acciones

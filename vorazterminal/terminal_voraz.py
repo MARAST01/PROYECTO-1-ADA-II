@@ -1,7 +1,7 @@
 def programacion_voraz(palabra1, palabra2, i, d, r, a, k):
     m = len(palabra1)
     t = len(palabra2)
-    
+     
     cursor1, cursor2 = 0, 0
     costo_total = 0
     acciones = []
@@ -27,7 +27,7 @@ def programacion_voraz(palabra1, palabra2, i, d, r, a, k):
                 cursor1 += 1
             continue
 
-        # Si los caracteres coinciden, avanzamos sin coste
+        # Si los caracteres coinciden
         if palabra1[cursor1] == palabra2[cursor2]:
             acciones.append("Avanzar ({} == {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], a))
             costo_total += a
@@ -36,19 +36,21 @@ def programacion_voraz(palabra1, palabra2, i, d, r, a, k):
 
         # Si no coinciden, elegimos la operación más barata: reemplazar, borrar o insertar
         else:
-            costo_reemplazar = r
-            costo_borrar = d
-            costo_insertar = i
 
-            if costo_reemplazar <= costo_borrar and costo_reemplazar <= costo_insertar:
+
+            if r <= d and r <= i and r <= d + i:
                 acciones.append("Reemplazar ({} -> {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], r))
                 costo_total += r
                 cursor1 += 1
                 cursor2 += 1
-            elif costo_borrar <= costo_reemplazar and costo_borrar <= costo_insertar:
+            elif d + i <= r:  # Si la suma de borrar e insertar es menor que reemplazar
                 acciones.append("Borrar ({}) -> {}".format(palabra1[cursor1], d))
                 costo_total += d
                 cursor1 += 1
+                acciones.append("Insertar ({}) -> {}".format(palabra2[cursor2], i))
+                costo_total += i
+                cursor2 += 1
+           
             else:
                 acciones.append("Insertar ({}) -> {}".format(palabra2[cursor2], i))
                 costo_total += i
