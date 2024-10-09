@@ -1,11 +1,17 @@
-from front import pagina_principal
-
- 
-
-def main():
-    pagina_principal.root.mainloop()
+from terminal import terminal
+from subasta import subastaVentana
 
 
-if __name__ == "__main__":
-        main()
+print("1. Terminal inteligente")
+print("2. Subasta")
+opcion = int(input("Elija una opcion: "))
+if opcion == 1:
+        terminal()
+elif opcion == 2:
+       subastaVentana()
+        
+
+else:
+        print("Opcion no valida")
+        exit()
         
