@@ -41,4 +41,3 @@ def terminal():
         print(f"El costo mínimo para transformar '{palabra1}' en '{palabra2}' es: {costo}")
         print("Acciones realizadas:", acciones)
         
-terminal()
