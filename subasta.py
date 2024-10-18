@@ -1,4 +1,4 @@
-# A =cantidad de acciones
+# A = cantidad de acciones
 # B = precio minimo por accion
 # n = cantidad de subastadores
 # pi= precio a pagar por accion
