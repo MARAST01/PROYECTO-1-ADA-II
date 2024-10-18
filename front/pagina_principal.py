@@ -2,7 +2,7 @@
 import tkinter as tk
 from tkinter import PhotoImage, font  
 import os
-import ventana_terminal_inteligente
+#import ventana_terminal_inteligente
 iconos_dir = os.path.join(os.path.dirname(__file__), 'ICONOS')
 
 #funciones
@@ -29,11 +29,15 @@ avanzar = PhotoImage(file=os.path.join(iconos_dir, 'kitty.png'))
 #──── ✧《TITULO》✧ ────#
 tk.Label(root, text="MENÚ PRINCIPAL", fg='#8FD4F7', bg='#6fa1e4', font=custom_font_title).pack(pady=(10, 0))
 #──── ✧《✩》✧ ────#
-def boton_terminal():
-    ventana_terminal_inteligente.root.mainloop()
+def abrir_ventana_terminal():
+    print("abrir ventana terminal")
+    import ventana_terminal_inteligente
+    
+
+    
 #CONTENIDO DEL CONTENEDOR MENU
 tk.Label(contenedor_menu, text="Selecciona una opción:", fg='#8FD4F7', bg='#6fa1e4', font=custom_font_title).pack(pady=(10, 0))
-botonterminal = tk.Button(contenedor_menu, text="Terminal inteligente", image=avanzar, bg='#6fa1e4', bd=0,command=boton_terminal)
-botonterminal.pack(pady=(10, 0))
-botonsubasta= tk.Button(contenedor_menu, text="Subasta", image=avanzar, bg='#6fa1e4', bd=0).pack(pady=(10, 0))
-  
+tk.Button(contenedor_menu, text="Terminal inteligente😼", bg='#6fa1e4', bd=0, font=('Helvetica', 16),  width=20, height=3,command=abrir_ventana_terminal).pack(pady=(10, 0))
+tk.Button(contenedor_menu, text="Subasta 🐈‍",  bg='#6fa1e4', bd=0, font=('Helvetica', 16),  width=20, height=3).pack(pady=(10, 0))
+
+root.mainloop()
