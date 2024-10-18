@@ -28,7 +28,7 @@ tk.Label(root, text="MENÚ PRINCIPAL", fg='#8FD4F7', bg='#6fa1e4', font=custom_f
 
 #CONTENIDO DEL CONTENEDOR MENU
 tk.Label(contenedor_menu, text="Selecciona una opción:", fg='#8FD4F7', bg='#6fa1e4', font=custom_font_title).pack(pady=(10, 0))
-tk.Button(contenedor_menu, text="Terminal inteligente", image=avanzar, bg='#6fa1e4', bd=0).pack(pady=(10, 0))
-tk.Button(contenedor_menu, text="Subasta", image=avanzar, bg='#6fa1e4', bd=0).pack(pady=(10, 0))
+tk.Button(contenedor_menu, text="Terminal inteligente😼", bg='#6fa1e4', bd=0, font=('Helvetica', 16),  width=20, height=3).pack(pady=(10, 0))
+tk.Button(contenedor_menu, text="Subasta 🐈‍",  bg='#6fa1e4', bd=0, font=('Helvetica', 16),  width=20, height=3).pack(pady=(10, 0))
 
 root.mainloop()
