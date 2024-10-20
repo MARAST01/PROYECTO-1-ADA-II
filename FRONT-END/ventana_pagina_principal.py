@@ -1,3 +1,4 @@
+#ya me harté de que no me deje hacer push (esto lo escribió copilot pero concuerdo con él)
 import tkinter as tk
 from tkinter import PhotoImage, font  
 import os
