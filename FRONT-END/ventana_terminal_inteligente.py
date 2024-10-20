@@ -113,7 +113,7 @@ icon_label5 = tk.Label(frame_entry5, image=kill, bg='#8FD4F7')
 icon_label5.pack(side=tk.LEFT)
 
 # Botón para guardar costos
-btn_guardar_costos = tk.Button(frame_costos, text="GUARDAR COSTOS", bg='#6fa1e4', fg='#8FD4F7', font=custom_font_button, width=35, height=2)
+btn_guardar_costos = tk.Button(frame_costos, text="GUARDAR COSTOS", bg='#6fa1e4', fg='#ffffff', font=custom_font_button, width=35, height=2)
 btn_guardar_costos.pack(pady=20)
 #──── ✧《✩》✧ ────#
 

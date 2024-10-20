@@ -1,11 +1,10 @@
 import tkinter as tk
 from tkinter import PhotoImage, font  
 import os
-iconos_dir = os.path.join(os.path.dirname(__file__), 'ICONOS')
 
 #──── ✧《VENTANA PRINCIPAL》✧ ────#
 root = tk.Tk()
-root.title("Pagina Principal")
+root.title("MENU PRINCIPAL")
 root.geometry("970x650")
 root.configure(bg='#6fa1e4')
 #──── ✧《✩》✧ ────#
@@ -17,6 +16,8 @@ contenedor_menu.pack_propagate(False)
 #──── ✧《✩》✧ ────#
 
 #──── ✧《FUENTE E ICONOS》✧ ────#
+iconos_dir = os.path.join(os.path.dirname(__file__), 'ICONOS')
+
 custom_font_title = font.Font(family="Times New Roman", size=30, weight="bold")
 custom_font_button = font.Font(family="Times New Romans", size=10, weight="bold")
 
