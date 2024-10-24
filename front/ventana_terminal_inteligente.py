@@ -5,6 +5,9 @@ import os
 from DINAMICA.InteligenteDinamica import programacion_dinamica
 from FUERZABRUTA.InteligenteBruta import fuerza_bruta
 from vorazterminal.terminal_voraz import programacion_voraz
+import time
+from . import pagina_principal
+#import matplotlib.pyplot as plt
 iconos_dir = os.path.join(os.path.dirname(__file__), 'ICONOS')
 # inicializar variables
 #costos
@@ -14,11 +17,11 @@ r=0
 i=0
 k=0
 costo = 0
-tiempo=0#de momento
+tiemp = 0
 def ventana_terminal():
     def guardar_costos():
         # Guardar los valores de los Entry en variables
-        global a, b, r, i, k
+        global a, d, r, i, k
         a = int(entry1.get())  # avanzar
         d = int(entry2.get())  # borrar
         r = int(entry3.get())  # reemplazar
@@ -41,27 +44,39 @@ def ventana_terminal():
         acciones_text.pack(expand=True, fill="both", padx=10, pady=10)
         
     def solucion_ingenua():
-        global costo, tiempo
+        global costo, tiemp
         # Captura de los valores ingresados en los Entry
         palabra_ini = palabra_inicial.get()  # Obtener la palabra inicial
         palabra_fin = palabra_final.get()    # Obtener la palabra final
+        inicio = time.time()
         costo, acciones = fuerza_bruta(palabra_ini, palabra_fin, 0, 0, i, d, r, a, k)
+        fin = time.time()
+        # Calcular el tiempo total en mili segundos
+        tiemp = (fin - inicio) * 1000
         mostrar_acciones(acciones)
     
     def solucion_voraz():
-        global costo, tiempo
+        global costo, tiemp
         # Captura de los valores ingresados en los Entry
         palabra_ini = palabra_inicial.get()  # Obtener la palabra inicial
         palabra_fin = palabra_final.get()    # Obtener la palabra final
+        inicio = time.time()
         costo, acciones = programacion_voraz(palabra_ini, palabra_fin, i, d, r, a, k)
+        fin = time.time()
+        # Calcular el tiempo total en mili segundos
+        tiemp = (fin - inicio) * 1000
         mostrar_acciones(acciones)
     
     def solucion_dinamica():
-        global costo, tiempo
+        global costo, tiemp
         # Captura de los valores ingresados en los Entry
         palabra_ini = palabra_inicial.get()  # Obtener la palabra inicial
         palabra_fin = palabra_final.get()    # Obtener la palabra final
+        inicio = time.time()
         costo, acciones = programacion_dinamica(palabra_ini, palabra_fin, i, d, r, a, k)
+        fin = time.time()
+        # Calcular el tiempo total en mili segundos
+        tiemp = (fin - inicio) * 1000
         mostrar_acciones(acciones)
     def mostrar_costos():
         # Establecer el widget 'costos' en estado normal para modificar su contenido
@@ -84,7 +99,7 @@ def ventana_terminal():
         tiempo.delete("1.0", tk.END)
 
         # Insertar el valor de la variable 'tiempo'
-        tiempo.insert(tk.END, str(tiempo))
+        tiempo.insert(tk.END, str(tiemp))
         # Volver a poner el widget en modo 'disabled' para evitar modificaciones
         tiempo.config(state='disabled')
     
@@ -223,12 +238,12 @@ def ventana_terminal():
     
     # Boton solución voraz
     btn_sol_voraz = tk.Button(frame_botones_soluciones, text="SOLUCIÓN VORAZ", fg='#ffe1f5', bg='#F1A7F1',
-                              font=custom_font_button, image=icono_sol_voraz, compound='top', width=140, height=100)
+                              font=custom_font_button, image=icono_sol_voraz, compound='top', width=140, height=100, command=solucion_voraz)
     btn_sol_voraz.pack(side=tk.LEFT, padx=5)
     
     # Boton solución dinamica
     btn_sol_dinamica = tk.Button(frame_botones_soluciones, text="SOLUCIÓN DINÁMICA", fg='#ffe1f5', bg='#F1A7F1',
-                                 font=custom_font_button, image=icono_sol_dinamica, compound='top', width=140, height=100)
+                                 font=custom_font_button, image=icono_sol_dinamica, compound='top', width=140, height=100, command=solucion_dinamica)
     btn_sol_dinamica.pack(side=tk.LEFT, padx=5)
     #──── ✧《✩》✧ ────#
     
@@ -271,8 +286,13 @@ def ventana_terminal():
     btn_mostrar_grafica = tk.Button(frame_botones_ver, text="VER GRÁFICA ", fg = '#6fa1e4' , bg='#8FD4F7', font=custom_font_button, image=icono_grafica, compound='right', width=130, height=50)
     btn_mostrar_grafica.pack(side=tk.LEFT, padx=5)
     
+    def atras():
+        # Cerrar la ventana actual
+        root.destroy()
+        # Volver a la ventana principal
+        pagina_principal.ventana_principal()
     # Botón atrás
-    btn_atras = tk.Button(frame_datos, text="ATRÁS ", fg = '#ffe1f5', bg='#F1A7F1', font=custom_font_button, image=icono_atras, compound='right', width=1000, height=50)
+    btn_atras = tk.Button(frame_datos, text="ATRÁS ", fg = '#ffe1f5', bg='#F1A7F1', font=custom_font_button, image=icono_atras, compound='right', width=1000, height=50,command=atras)
     btn_atras.pack(pady=(10, 0))  # Lo colocamos en el frame_datos
     #──── ✧《✩》✧ ────#
     
