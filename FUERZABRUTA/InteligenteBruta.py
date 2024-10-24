@@ -42,13 +42,18 @@ def fuerza_bruta(palabra1, palabra2, cursor1, cursor2, i, d, r, a, k):
 
     # Si las letras son iguales, decidir si avanzar o reemplazar
     if palabra1[cursor1] == palabra2[cursor2]:
-        if a <= r:
-            costo, acciones = fuerza_bruta(palabra1, palabra2, cursor1 + 1, cursor2 + 1, i, d, r, a, k)
-            return costo + a, ["Avanzar ({} == {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], a)] + acciones
-        else:
-            return costo_reemplazar, ["Reemplazar ({} -> {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], r)] + acciones_reemplazar
-
-    # Comparar todos los costos (reemplazar, insertar, borrar, kill) y escoger la opción con el costo mínimo
+        costo_avanzar, acciones_avanzar = fuerza_bruta(palabra1, palabra2, cursor1 + 1, cursor2 + 1, i, d, r, a, k)
+        costo_avanzar += a
+        # Comparar costos y elegir la acción más barata
+        opciones = [(costo_reemplazar, acciones_reemplazar, "Reemplazar ({} -> {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], r)),
+                (costo_insertar, acciones_insertar, "Insertar ({}) -> {}".format(palabra2[cursor2], i)),
+                (costo_borrar, acciones_borrar, "Borrar ({}) -> {}".format(palabra1[cursor1], d)),
+                (costo_kill, acciones_kill, "Kill ({}) -> {}".format(palabra1[cursor1], k)),
+                (costo_avanzar, acciones_avanzar, "Avanzar ({} == {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], a))]
+        
+        costo_minimo, acciones_minimas, accion = min(opciones, key=lambda x: x[0])
+        return costo_minimo, [accion] + acciones_minimas       
+    # comparar costos sin avanzar
     opciones = [(costo_reemplazar, acciones_reemplazar, "Reemplazar ({} -> {}) -> {}".format(palabra1[cursor1], palabra2[cursor2], r)),
                 (costo_insertar, acciones_insertar, "Insertar ({}) -> {}".format(palabra2[cursor2], i)),
                 (costo_borrar, acciones_borrar, "Borrar ({}) -> {}".format(palabra1[cursor1], d)),
@@ -56,5 +61,22 @@ def fuerza_bruta(palabra1, palabra2, cursor1, cursor2, i, d, r, a, k):
 
     # Seleccionar la acción con el costo mínimo
     costo_minimo, acciones_minimas, accion = min(opciones, key=lambda x: x[0])
-
     return costo_minimo, [accion] + acciones_minimas
+
+
+a = 5  # avanzar
+d = 5  # borrar
+r = 5  # reemplazar
+i = 1  # insertar
+k = 1  # matar
+
+
+
+# Función delete (borrar un carácter)
+
+palabra1 = "aaa"
+palabra2 = "aaa"
+costo, acciones = fuerza_bruta(palabra1,palabra2,0,0,i,d,r,a,k)
+#imprimir costo y acciones
+print(f"El costo mínimo para transformar '{palabra1}' en '{palabra2}' es: {costo}")
+print("Acciones realizadas:", acciones)
