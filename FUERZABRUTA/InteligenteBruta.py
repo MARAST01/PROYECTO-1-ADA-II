@@ -64,19 +64,4 @@ def fuerza_bruta(palabra1, palabra2, cursor1, cursor2, i, d, r, a, k):
     return costo_minimo, [accion] + acciones_minimas
 
 
-a = 5  # avanzar
-d = 5  # borrar
-r = 5  # reemplazar
-i = 1  # insertar
-k = 1  # matar
-
-
-
-# Función delete (borrar un carácter)
-
-palabra1 = "aaa"
-palabra2 = "aaa"
-costo, acciones = fuerza_bruta(palabra1,palabra2,0,0,i,d,r,a,k)
-#imprimir costo y acciones
-print(f"El costo mínimo para transformar '{palabra1}' en '{palabra2}' es: {costo}")
-print("Acciones realizadas:", acciones)
+ 
