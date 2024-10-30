@@ -1,3 +1,4 @@
+
 def subasta_programacion_dinamica(A, B, ofertas):
     n = len(ofertas)
     # Ordenar las ofertas por precio en orden descendente para priorizar las mejores
@@ -38,5 +39,7 @@ def subasta_programacion_dinamica(A, B, ofertas):
     # El valor máximo que podemos obtener es dp[A]
     max_vr = dp[A]
     
-    print("Valor máximo:", max_vr)
-    print("Mejor asignación:", mejor_asignacion)
+    
+    return max_vr, mejor_asignacion
+    
+    
