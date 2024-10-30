@@ -64,7 +64,7 @@ def subastaVentana():
                  
                  start_time = time.time()
                  vm, ma = fuerza_bruta_iterativa(A, B, ofertas)
-                 print("Valor máximo")
+                 
                  
                  labelvm = tk.Label(contenedor_mostrar, text=f"Valor máximo: {vm}")
                  labelvm.pack(pady=5)
