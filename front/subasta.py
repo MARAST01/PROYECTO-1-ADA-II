@@ -30,6 +30,7 @@ def subastaVentana():
         ventana_ofertas = tk.Toplevel(root)
         ventana_ofertas.title("Ofertas")
         label = tk.Label(ventana_ofertas, text="Ingrese las ofertas, precio por accion, cantidad minima a comprar, cantidad maxima a comprar (separadas por coma):")
+        label.pack(pady=5)
         # Crear etiquetas y campos de entrada para las ofertas
         for i in range(n):
             label = tk.Label(ventana_ofertas, text=f"Ofertador {i + 1}:")
@@ -44,35 +45,89 @@ def subastaVentana():
         button_dinamica.pack(pady=20)
         button_voraz = tk.Button(ventana_ofertas, text="Programación voraz", command=lambda: procesar_ofertas(A, B, n, 3))
         button_voraz.pack(pady=20)
+        contenedor_mostrar = tk.Frame(ventana_ofertas, bg='#8FD4F7', width=535, height=535)
         
-    def procesar_ofertas(A, B, n, opcion):
-        ofertas = []
-        try:
-         for entry in entries_ofertas:
-             # Obtener el texto de cada entrada y convertirlo a una tupla
-             oferta_text = entry.get()
-             precio, min_acciones, max_acciones = map(int, oferta_text.split(','))
-             ofertas.append((precio, min_acciones, max_acciones))
-         # Aquí puedes llamar a tu función de subasta_programacion_dinamica(A, B, ofertas)
-         # Por ahora, solo mostramos las ofertas
-         if opcion == 1:
-             start_time = time.time()
-             fuerza_bruta_iterativa(A, B, ofertas)
-             end_time = time.time()
-             print(f"Tiempo de ejecución de Fuerza Bruta: {end_time - start_time} segundos")
-         elif opcion == 2:
-             start_time = time.time()
-             subasta_programacion_dinamica(A, B, ofertas)
-             end_time = time.time()
-             print(f"Tiempo de ejecución de Programación Dinámica: {end_time - start_time} segundos")
-         elif opcion == 3:
-             start_time = time.time()
-             subasta_voraz(A, B, ofertas)
-             end_time = time.time()
-             print(f"Tiempo de ejecución de Programación Voraz: {end_time - start_time} segundos")
-        except ValueError:
-         messagebox.showerror("Error", "Por favor, ingresa ofertas válidas en el formato correcto.")
-
+        contenedor_mostrar.pack(pady=20)
+        
+        def procesar_ofertas(A, B, n, opcion):
+            ofertas = []
+            try:
+             for entry in entries_ofertas:
+                 # Obtener el texto de cada entrada y convertirlo a una tupla
+                 oferta_text = entry.get()
+                 precio, min_acciones, max_acciones = map(int, oferta_text.split(','))
+                 ofertas.append((precio, min_acciones, max_acciones))
+             # Aquí puedes llamar a tu función de subasta_programacion_dinamica(A, B, ofertas)
+             limpiar_contenedor()            
+             # Por ahora, solo mostramos las ofertas
+             if opcion == 1:
+                 
+                 start_time = time.time()
+                 vm, ma = fuerza_bruta_iterativa(A, B, ofertas)
+                 
+                 
+                 labelvm = tk.Label(contenedor_mostrar, text=f"Valor máximo: {vm}")
+                 labelvm.pack(pady=5)
+                 labelma = tk.Label(contenedor_mostrar, text=f"Mejor asignación")
+                 labelma.pack(pady=5) 
+                 for i in range(len(ma)):
+                     if i == (len(ma) -1):
+                            labelma = tk.Label(contenedor_mostrar, text=f"Oferta del gobierno: {ma[i]}")
+                            labelma.pack(pady=5)
+                     else:
+                         labelma = tk.Label(contenedor_mostrar, text=f"Ofertador {[i+1]}: {ma[i]}")
+                         labelma.pack(pady=5)
+                   
+                 
+                 
+                 end_time = time.time()
+                 labeltime = tk.Label(contenedor_mostrar, text=f"Tiempo de ejecución: {end_time - start_time} segundos")
+                 labeltime.pack(pady=5)
+                 
+             elif opcion == 2:
+                 
+                 start_time = time.time()
+                 vmdin, vadin = subasta_programacion_dinamica(A, B, ofertas)
+                 
+                 labelvm = tk.Label(contenedor_mostrar, text=f"Valor máximo: {vmdin}")
+                 labelvm.pack(pady=5)
+                 labelma = tk.Label(contenedor_mostrar, text=f"Mejor asignación")
+                 labelma.pack(pady=5)
+                 for i in range(len(vadin)):
+                     if i == (len(vadin) -1):
+                            labelma = tk.Label(contenedor_mostrar, text=f"Oferta del gobierno: {vadin[i]}")
+                            labelma.pack(pady=5)
+                     else:
+                         labelma = tk.Label(contenedor_mostrar, text=f"Ofertador {[i+1]}: {vadin[i]}")
+                         labelma.pack(pady=5)
+                 end_time = time.time()
+                 labeltime = tk.Label(contenedor_mostrar, text=f"Tiempo de ejecución: {end_time - start_time} segundos")
+                 labeltime.pack(pady=5)
+             elif opcion == 3:
+                 
+                 start_time = time.time()
+                 vmvoraz, mavoraz =subasta_voraz(A, B, ofertas)
+                 
+                 labelvm = tk.Label(contenedor_mostrar, text=f"Valor máximo: {vmvoraz}")
+                 labelvm.pack(pady=5)
+                 labelma = tk.Label(contenedor_mostrar, text=f"Mejor asignación")
+                 labelma.pack(pady=5)
+                 for i in range(len(mavoraz)):
+                     if i == (len(mavoraz) -1):
+                            labelma = tk.Label(contenedor_mostrar, text=f"Oferta del gobierno: {mavoraz[i]}")
+                            labelma.pack(pady=5)
+                     else:
+                         labelma = tk.Label(contenedor_mostrar, text=f"Ofertador {[i+1]}: {mavoraz[i]}")
+                         labelma.pack(pady=5)              
+                 end_time = time.time()
+                 labeltime = tk.Label(contenedor_mostrar, text=f"Tiempo de ejecución: {end_time - start_time} segundos")
+                 labeltime.pack(pady=5)
+            except ValueError:
+             messagebox.showerror("Error", "Por favor, ingresa ofertas válidas en el formato correcto.")
+        def limpiar_contenedor():
+            for widget in contenedor_mostrar.winfo_children():
+                widget.destroy()
+    
        
     # Crear la ventana principal
     root = tk.Tk()
