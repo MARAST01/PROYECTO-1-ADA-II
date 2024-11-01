@@ -36,6 +36,5 @@ def fuerza_bruta_iterativa(A, B, ofertas):
     else:
         asignaciones[A][n].append(0)
 
-    # El valor máximo se encuentra en dp[A][n]
-    print("Valor máximo:", dp[A][n])
-    print("Mejor asignación:", asignaciones[A][n])
+    
+    return dp[A][n], asignaciones[A][n]

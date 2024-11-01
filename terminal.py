@@ -1,7 +1,10 @@
 from DINAMICA.InteligenteDinamica import programacion_dinamica
 from FUERZABRUTA.InteligenteBruta import fuerza_bruta
 from vorazterminal.terminal_voraz import programacion_voraz
- 
+from front import pagina_principal
+#####################################
+#NO SE ESTA USANDO, PERO SE TOMO REFERENCIA DE AQUI, NO BORRAR HASTA QUE NO SEA NECESARIO
+#####################################
 # Costos
 a = 1  # avanzar
 d = 2  # borrar
@@ -18,6 +21,7 @@ palabra1 = "algorithm"
 palabra2 = "altruistic"
 
 def terminal():
+    pagina_principal.ventana_principal()
     print("Elige el método de transformación:")
     print("1. Fuerza Bruta")
     print("2. Programación Dinámica")
