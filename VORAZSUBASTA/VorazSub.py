@@ -28,8 +28,8 @@ def subasta_voraz(A, B, ofertas):
         vr += asignacion[i] * pi
     vr += acciones_gobierno * B  # Las acciones compradas por el gobierno
 
-    print(f"Mejor asignación: {asignacion}")
-    print(f"Valor recibido máximo (vr): {vr}")
+
+    return vr, asignacion
     
 
 
