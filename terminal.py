@@ -1,6 +1,6 @@
 from DINAMICA.InteligenteDinamica import programacion_dinamica
 from FUERZABRUTA.InteligenteBruta import fuerza_bruta
-from vorazterminal.terminal_voraz import programacion_voraz
+from VORAZ.terminal_voraz import programacion_voraz
 from front import pagina_principal
 #####################################
 #NO SE ESTA USANDO, PERO SE TOMO REFERENCIA DE AQUI, NO BORRAR HASTA QUE NO SEA NECESARIO

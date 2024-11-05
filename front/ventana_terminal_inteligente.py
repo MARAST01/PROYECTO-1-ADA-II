@@ -4,7 +4,7 @@ from tkinter import PhotoImage, font
 import os
 from DINAMICA.InteligenteDinamica import programacion_dinamica
 from FUERZABRUTA.InteligenteBruta import fuerza_bruta
-from vorazterminal.terminal_voraz import programacion_voraz
+from VORAZ.terminal_voraz import programacion_voraz
 import time
 from . import pagina_principal
 #import matplotlib.pyplot as plt
