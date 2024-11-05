@@ -1,5 +1,5 @@
-from terminal import terminal
-from subasta import subastaVentana
+#from terminal import terminal
+#from subasta import subastaVentana
 from front import pagina_principal
 
 #main que ejecuta pagina_principal

@@ -1,40 +1,30 @@
-
-def fuerza_bruta_iterativa(A, B, ofertas):
+def fuerza_bruta_sub(A, B, ofertas):
     n = len(ofertas)
-    
-    # Inicializamos una tabla para almacenar los resultados
-    # dp[i][j] será el valor máximo que se puede obtener con i acciones y los primeros j oferentes
-    dp = [[0] * (n + 1) for _ in range(A + 1)]
-    
-    # Inicializamos un array para rastrear la mejor asignación
-    asignaciones = [[[] for _ in range(n + 1)] for _ in range(A + 1)]
+    mejor_valor = 0
+    mejor_asignacion = []
 
-    # Iteramos sobre cada oferente
-    for j in range(1, n + 1):
-        pi, mi, Mi = ofertas[j - 1]  # Ofertas es 0-indexado
+    # Función recursiva para probar todas las combinaciones posibles
+    def probar_combinaciones(asignacion_actual, indice, acciones_restantes):
+        nonlocal mejor_valor, mejor_asignacion
 
-        # Iteramos sobre la cantidad de acciones disponibles
-        for i in range(A + 1):
-            # Sin asignar acciones al oferente actual
-            dp[i][j] = dp[i][j - 1]
-            asignaciones[i][j] = asignaciones[i][j-1] + [0]
+        # Si hemos asignado todas las acciones o hemos considerado todos los oferentes
+        if indice == n:
+            valor_actual = sum(xi * pi for xi, (pi, mi, Mi) in zip(asignacion_actual, ofertas))
+            acciones_sobrantes = acciones_restantes
+            valor_actual += acciones_sobrantes * B
 
-            # Probar asignar xi acciones al oferente actual
-            for xi in range(mi, min(Mi, i) + 1):
-                valor_actual = xi * pi + dp[i - xi][j - 1]
-                
-                # Si encontramos un mejor valor, actualizamos
-                if valor_actual > dp[i][j]:
-                    dp[i][j] = valor_actual
-                    asignaciones[i][j] = asignaciones[i - xi][j - 1] + [xi]
-   
-    # Si sobran acciones, el gobierno compra a un precio B
-    acciones_sobrantes = A - sum(asignaciones[A][n])
-    if acciones_sobrantes > 0:
-        dp[A][n] += acciones_sobrantes * B
-        asignaciones[A][n].append(acciones_sobrantes)
-    else:
-        asignaciones[A][n].append(0)
+            if valor_actual > mejor_valor:
+                mejor_valor = valor_actual
+                mejor_asignacion = asignacion_actual + [acciones_sobrantes]
+            return
 
-    
-    return dp[A][n], asignaciones[A][n]
+        pi, mi, Mi = ofertas[indice]
+
+        # Probar todas las cantidades posibles de acciones para el oferente actual
+        for xi in range(mi, min(Mi, acciones_restantes) + 1):
+            probar_combinaciones(asignacion_actual + [xi], indice + 1, acciones_restantes - xi)
+
+    # Iniciar la recursión
+    probar_combinaciones([], 0, A)
+
+    return mejor_valor, mejor_asignacion

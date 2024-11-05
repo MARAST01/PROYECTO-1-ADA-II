@@ -4,7 +4,7 @@
 # pi= precio a pagar por accion
 # mi= numero minimo de acciones a comprar
 # Mi= numero maximo de acciones a comprar
-from FUERZABRUTASUBASTA.FUERZABRUTA_SUB import fuerza_bruta_iterativa
+from FUERZABRUTASUBASTA.FUERZABRUTA_SUB import fuerza_bruta_sub
 from DINAMICASUB.DinamicaSub import subasta_programacion_dinamica
 from VORAZSUBASTA.VorazSub import subasta_voraz
 import time
@@ -63,7 +63,7 @@ def subastaVentana():
              if opcion == 1:
                  
                  start_time = time.time()
-                 vm, ma = fuerza_bruta_iterativa(A, B, ofertas)
+                 vm, ma = fuerza_bruta_sub(A, B, ofertas)
                  
                  
                  labelvm = tk.Label(contenedor_mostrar, text=f"Valor máximo: {vm}")
