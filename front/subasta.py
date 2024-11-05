@@ -4,9 +4,9 @@
 # pi= precio a pagar por accion
 # mi= numero minimo de acciones a comprar
 # Mi= numero maximo de acciones a comprar
-from FUERZABRUTASUBASTA.FUERZABRUTA_SUB import fuerza_bruta_sub
-from DINAMICASUB.DinamicaSub import subasta_programacion_dinamica
-from VORAZSUBASTA.VorazSub import subasta_voraz
+from FUERZABRUTA.FUERZABRUTA_SUB import fuerza_bruta_sub
+from DINAMICA.DinamicaSub import subasta_programacion_dinamica
+from VORAZ.VorazSub import subasta_voraz
 import time
 import tkinter as tk
 
