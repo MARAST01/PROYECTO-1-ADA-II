@@ -1,6 +1,6 @@
-
 def subasta_programacion_dinamica(A, B, ofertas):
     n = len(ofertas)
+    
     # Ordenar las ofertas por precio en orden descendente para priorizar las mejores
     ofertas.sort(reverse=True, key=lambda x: x[0])  # Ordenar por precio (pi)
 
@@ -28,9 +28,9 @@ def subasta_programacion_dinamica(A, B, ofertas):
     mejor_asignacion = [0] * n
     acciones_restantes = A
 
-    for i in range(n):
+    for i in range(n - 1, -1, -1):  # Iteramos en reversa para reconstruir correctamente
         xi = asignacion[i][acciones_restantes]
-        mejor_asignacion[i] += xi
+        mejor_asignacion[i] = xi
         acciones_restantes -= xi
 
     # Finalmente, asignamos las acciones restantes al gobierno
@@ -39,7 +39,4 @@ def subasta_programacion_dinamica(A, B, ofertas):
     # El valor máximo que podemos obtener es dp[A]
     max_vr = dp[A]
     
-    
     return max_vr, mejor_asignacion
-    
-    
