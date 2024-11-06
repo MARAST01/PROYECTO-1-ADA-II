@@ -64,4 +64,3 @@ def fuerza_bruta(palabra1, palabra2, cursor1, cursor2, i, d, r, a, k):
     return costo_minimo, [accion] + acciones_minimas
 
 
- 
