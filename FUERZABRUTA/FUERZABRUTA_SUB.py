@@ -1,30 +1,40 @@
-def fuerza_bruta_sub(A, B, ofertas):
-    n = len(ofertas)
+def fuerza_bruta_sub(A, B, n, ofertas):
     mejor_valor = 0
     mejor_asignacion = []
+    
+    # Ordenar las ofertas en función del precio por acción de mayor a menor
+    ofertas = sorted(ofertas, key=lambda x: x[0], reverse=True)
+    
 
-    # Función recursiva para probar todas las combinaciones posibles
-    def probar_combinaciones(asignacion_actual, indice, acciones_restantes):
+    # Generar todas las combinaciones posibles de asignaciones
+    def generar_asignaciones(indice, acciones_totales, asignacion_actual):
         nonlocal mejor_valor, mejor_asignacion
 
-        # Si hemos asignado todas las acciones o hemos considerado todos los oferentes
+        # Si hemos procesado todas las ofertas
         if indice == n:
-            valor_actual = sum(xi * pi for xi, (pi, mi, Mi) in zip(asignacion_actual, ofertas))
-            acciones_sobrantes = acciones_restantes
-            valor_actual += acciones_sobrantes * B
-
+            # Calcular el valor actual
+            valor_actual = sum(asignacion_actual[i] * ofertas[i][0] for i in range(n))
             if valor_actual > mejor_valor:
                 mejor_valor = valor_actual
-                mejor_asignacion = asignacion_actual + [acciones_sobrantes]
+                mejor_asignacion = asignacion_actual[:]
             return
 
-        pi, mi, Mi = ofertas[indice]
+        # Obtener la oferta actual
+        precio, min_acciones, max_acciones = ofertas[indice]
 
-        # Probar todas las cantidades posibles de acciones para el oferente actual
-        for xi in range(mi, min(Mi, acciones_restantes) + 1):
-            probar_combinaciones(asignacion_actual + [xi], indice + 1, acciones_restantes - xi)
+        # Probar todas las cantidades de acciones desde min hasta max para la oferta actual
+        for cantidad in range(min_acciones, max_acciones + 1):
+            # Asegurarse de no exceder la cantidad total de acciones
+            if acciones_totales + cantidad <= A:
+                asignacion_actual[indice] = cantidad
+                generar_asignaciones(indice + 1, acciones_totales + cantidad, asignacion_actual)
 
-    # Iniciar la recursión
-    probar_combinaciones([], 0, A)
+        # También considerar no asignar acciones a esta oferta
+        asignacion_actual[indice] = 0
+        generar_asignaciones(indice + 1, acciones_totales, asignacion_actual)
+
+    # Inicializar la lista de asignaciones
+    asignacion_inicial = [0] * n
+    generar_asignaciones(0, 0, asignacion_inicial)
 
     return mejor_valor, mejor_asignacion

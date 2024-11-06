@@ -6,3 +6,4 @@ from front import pagina_principal
 if __name__ == '__main__':
     pagina_principal.ventana_principal()
     
+    
