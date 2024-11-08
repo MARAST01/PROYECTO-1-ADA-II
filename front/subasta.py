@@ -2,6 +2,7 @@
 from FUERZABRUTA.FUERZABRUTA_SUB import fuerza_bruta_sub
 from DINAMICA.DinamicaSub import subasta_programacion_dinamica
 from VORAZ.VorazSub import subasta_voraz
+from front import pagina_principal
 import time
 import tkinter as tk
 from tkinter import PhotoImage, font  
@@ -119,9 +120,10 @@ def subastaVentana():
         contenedor_mostrar.pack(pady=30)
 
         # Botón ATRÁS
-        btn_atras = tk.Button(subcontenedor, text="ATRÁS ",  bg='#6fa1e4', fg='#ffffff', font=custom_font_button, image=atras, compound='right', width=300, height=50)
+        btn_atras = tk.Button(subcontenedor, text="ATRÁS ",  bg='#6fa1e4', fg='#ffffff', font=custom_font_button, image=atras, compound='right', width=300, height=50, command=ventana_ofertas.destroy)
         btn_atras.pack(pady=(10, 0)) 
         
+      
         
         
         def procesar_ofertas(A, B, n, opcion):
@@ -265,8 +267,8 @@ def subastaVentana():
     button_submit = tk.Button(contenedor, text=" INGRESAR ", bg='#6fa1e4', fg='#ffffff', font=custom_font_button, image=inteligente, compound='right',command=obtener_valores, width=300, height=50)
     button_submit.pack(pady=(10, 10)) 
     # BOTON ATRÁS
-    btn_atras = tk.Button(contenedor, text="ATRÁS ", fg = '#ffe1f5', bg='#F1A7F1', font=custom_font_button, image=atras, compound='right', width=300, height=50)
+    btn_atras = tk.Button(contenedor, text="ATRÁS ", fg = '#ffe1f5', bg='#F1A7F1', font=custom_font_button, image=atras, compound='right', width=300, height=50, command=lambda: [root.destroy(), pagina_principal.ventana_principal()])
     btn_atras.pack(pady=(10, 0))
     root.mainloop()
-
+    
 
