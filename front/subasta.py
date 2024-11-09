@@ -2,11 +2,13 @@
 from FUERZABRUTA.FUERZABRUTA_SUB import fuerza_bruta_sub
 from DINAMICA.DinamicaSub import subasta_programacion_dinamica
 from VORAZ.VorazSub import subasta_voraz
+from front import pagina_principal
 import time
 import tkinter as tk
 from tkinter import PhotoImage, font  
 import os
 from tkinter import messagebox
+import customtkinter
 entries_ofertas = []
 iconos_dir = os.path.join(os.path.dirname(__file__), 'ICONOS')
 
@@ -28,66 +30,47 @@ def subastaVentana():
         ventana_ofertas.geometry("600x750")  # Ajuste de altura para ver más contenido con scroll
         ventana_ofertas.configure(bg='#6fa1e4')
         
-        # ──── ✧《CANVAS CON SCROLL PARA TODA LA VENTANA》✧ ──── #
-        canvas = tk.Canvas(ventana_ofertas, bg='#6fa1e4')
-        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        # ──── ✧《CONTENEDOR DE TODO》✧ ──── #
+        ContenedorPrincipal = tk.Frame(ventana_ofertas, bg='#6fa1e4')
+        ContenedorPrincipal.pack(fill="both", expand=True, padx=10, pady=10)
 
-        scrollbar = tk.Scrollbar(ventana_ofertas, orient="vertical", command=canvas.yview)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        canvas.configure(yscrollcommand=scrollbar.set)
-
-      # Frame contenedor dentro del canvas centrado
-        ContenedorPrincipal = tk.Frame(canvas, bg='#6fa1e4')
-        ContenedorPrincipal_id = canvas.create_window((0, 0), window=ContenedorPrincipal, anchor="n")
-
-# Configurar el scroll y centrar el contenido horizontalmente cuando se cambie el tamaño
-        def update_scroll_region(event=None):
-            canvas.configure(scrollregion=canvas.bbox("all"))
-            canvas.itemconfig(ContenedorPrincipal_id, width=canvas.winfo_width())
-
-        ContenedorPrincipal.bind("<Configure>", update_scroll_region)
-        ventana_ofertas.bind("<Configure>", update_scroll_region)   
-
-        # ──── ✧《FUENTE E ICONOS》✧ ──── #
-        
-
+        # Título y etiqueta de información en el ContenedorPrincipal
         custom_font_title = font.Font(family="Times New Roman", size=30, weight="bold")
-        custom_font_texto = font.Font(family="Times New Roman", size=20, weight="bold")
-        custom_font_button = font.Font(family="Times New Romans", size=10, weight="bold")
-        custom_font_info = font.Font(family="Times New Roman", size=9, weight="bold")
-
-        
-        
-        # Cargar iconos
-        subasta = PhotoImage(file=os.path.join(iconos_dir, 'subasta.png'))
-         # Icono de solución dinámica
-        # ──── ✧《TITULO》✧ ──── #
+        custom_font_info = font.Font(family="Times New Roman", size=10, weight="bold")
         tk.Label(ContenedorPrincipal, text="OFERTAS", fg='#8FD4F7', bg='#6fa1e4', font=custom_font_title).pack(pady=(10, 0))
+        tk.Label(ContenedorPrincipal, text="Ingrese las ofertas, precio por acción, cantidad mínima a comprar, \n cantidad máxima a comprar (separadas por coma).", 
+         fg='#8FD4F7', bg='#6fa1e4', font=custom_font_info).pack(pady=(10, 10))
+        # ──── ✧《SUBCONTENEDOR CON SCROLL》✧ ──── #
 
-        # CONTENIDO DEL CONTENEDOR MENU
-        labelInfo = tk.Label(ContenedorPrincipal, text="Ingrese las ofertas, precio por acción, cantidad mínima a comprar, \n cantidad máxima a comprar (separadas por coma).", fg='#8FD4F7', bg='#6fa1e4', font=custom_font_info).pack(pady=(10, 0))
-
-        # Subcontenedor para los campos de entrada
-        subcontenedor = tk.Frame(ContenedorPrincipal, bg='#8FD4F7', width=535, height=830, bd=5, relief='ridge')
-        subcontenedor.pack(pady=20)
-        subcontenedor.pack_propagate(False)
+        subcontenedor = customtkinter.CTkScrollableFrame(ContenedorPrincipal, 
+                                                 orientation="vertical", 
+                                                 fg_color='#8FD4F7', 
+                                                 width=500, 
+                                                 height=600,
+                                                 border_width=3,
+                                                 border_color="white",
+                                                 scrollbar_fg_color="#FFFFFF",
+                                                 scrollbar_button_color="#F1A7F1",
+                                                 scrollbar_button_hover_color="#c193c1",
+                                                 corner_radius=10
+                                                 )
+        subcontenedor.pack(pady=40)
+       
+        # subcontenedor.pack_propagate(False)
         
-        # label = tk.Label(ventana_ofertas, text="Ingrese las ofertas, precio por accion, cantidad minima a comprar, cantidad maxima a comprar (separadas por coma):")
-        # label.pack(pady=5)
+        custom_font_texto = font.Font(family="Times New Roman", size=20, weight="bold")
+        custom_font_button = font.Font(family="Times New Roman", size=10, weight="bold")    
+       
         # Crear etiquetas y campos de entrada para las ofertas
         for i in range(n):
-            # label = tk.Label(ventana_ofertas, text=f"Ofertador {i + 1}:")
-            # label.pack(pady=5)
-            # entry_oferta = tk.Entry(ventana_ofertas)
-            # entry_oferta.pack(pady=5)
-            # entries_ofertas.append(entry_oferta)
             
-            label_A = tk.Label(subcontenedor, text=f"OFERTADOR {i+1}", fg='#6fa1e4', bg='#8FD4F7', font=custom_font_texto).pack(pady=(10, 0))
+
+            tk.Label(subcontenedor, text=f"OFERTADOR {i+1}", fg='#6fa1e4', bg='#8FD4F7', font=custom_font_texto).pack(pady=(10, 0))
             entry_oferta = tk.Entry(subcontenedor, width=23, font=('Arial', 14))
             entry_oferta.pack(pady=(0, 10))
             entries_ofertas.append(entry_oferta)
         
-        label = tk.Label(subcontenedor, text="OFERTA DEL GOBIERNO",fg='#6fa1e4', bg='#8FD4F7', font=custom_font_texto).pack(pady=(10, 0))
+        tk.Label(subcontenedor, text=f"OFERTA DEL GOBIERNO", fg='#6fa1e4', bg='#8FD4F7', font=custom_font_texto).pack(pady=(10, 0))
         entry_oferta = tk.Entry(subcontenedor, width=23, font=('Arial', 14))
         entry_oferta.insert(0, f"{B},0,{A}")
         entry_oferta.config(state='readonly')
@@ -118,15 +101,29 @@ def subastaVentana():
 
 
         label_res = tk.Label(subcontenedor, text="Resultado", fg='#6fa1e4', bg='#8FD4F7', font=custom_font_texto).pack(pady=(10, 0))
-# ──── ✧《FRAME RESULTADOS》✧ ──── #
-        contenedor_mostrar = tk.Frame(subcontenedor, bg='#e1faf6', width=400, height=400)
-        contenedor_mostrar.pack_propagate(False)
-        contenedor_mostrar.pack(pady=(10, 0))
+# ──── ✧《FRAME RESULTADOS CON SCROLL》✧ ──── #
+        contenedor_mostrar = customtkinter.CTkScrollableFrame(subcontenedor, 
+                                                 orientation="vertical", 
+                                                 fg_color='#FFFFFF', 
+                                                 width=400, 
+                                                 height=200,
+                                                 label_text="Resultado",
+                                                 label_fg_color="#8FD4F7",
+                                                 label_text_color="white",
+                                                 label_font=("Times New Roman", 18),
+                                                 border_width=3,
+                                                 border_color="white",
+                                                 scrollbar_button_color="#F1A7F1",
+                                                 scrollbar_button_hover_color="#c193c1",
+                                                 corner_radius=5
+                                                 )
+        contenedor_mostrar.pack(pady=30)
 
         # Botón ATRÁS
-        btn_atras = tk.Button(subcontenedor, text="ATRÁS ",  bg='#6fa1e4', fg='#ffffff', font=custom_font_button, image=atras, compound='right', width=300, height=50)
+        btn_atras = tk.Button(subcontenedor, text="ATRÁS ",  bg='#6fa1e4', fg='#ffffff', font=custom_font_button, image=atras, compound='right', width=300, height=50, command=ventana_ofertas.destroy)
         btn_atras.pack(pady=(10, 0)) 
         
+      
         
         
         def procesar_ofertas(A, B, n, opcion):
@@ -270,8 +267,8 @@ def subastaVentana():
     button_submit = tk.Button(contenedor, text=" INGRESAR ", bg='#6fa1e4', fg='#ffffff', font=custom_font_button, image=inteligente, compound='right',command=obtener_valores, width=300, height=50)
     button_submit.pack(pady=(10, 10)) 
     # BOTON ATRÁS
-    btn_atras = tk.Button(contenedor, text="ATRÁS ", fg = '#ffe1f5', bg='#F1A7F1', font=custom_font_button, image=atras, compound='right', width=300, height=50)
+    btn_atras = tk.Button(contenedor, text="ATRÁS ", fg = '#ffe1f5', bg='#F1A7F1', font=custom_font_button, image=atras, compound='right', width=300, height=50, command=lambda: [root.destroy(), pagina_principal.ventana_principal()])
     btn_atras.pack(pady=(10, 0))
     root.mainloop()
-
+    
 
