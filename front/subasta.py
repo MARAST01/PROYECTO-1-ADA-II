@@ -136,8 +136,21 @@ def subastaVentana():
                  ofertas.append((precio, min_acciones, max_acciones))
              # Aquí puedes llamar a tu función de subasta_programacion_dinamica(A, B, ofertas)
              limpiar_contenedor()            
-             # Por ahora, solo mostramos las ofertas
-             if opcion == 1:
+             
+             def verificar_ofertas(ofertas):
+                #  recorrer el arreglo y verificar si las ofertas son iguales o mayores a B
+                for oferta in ofertas:
+                    if oferta[0] < B:
+                        return False
+                    elif oferta[1] > oferta[2]:
+                        return False
+                 
+                return True
+             if verificar_ofertas(ofertas) == False:
+                 messagebox.showerror("Error", "Por favor, ingresa ofertas válidas en el formato correcto.")
+                 return
+             else: 
+                if opcion == 1:
                  
                  start_time = time.time()
                  vm, ma = fuerza_bruta_sub(A, B,n+1, ofertas)
@@ -162,7 +175,7 @@ def subastaVentana():
                  labeltime = tk.Label(contenedor_mostrar, text=f"Tiempo de ejecución: {end_time - start_time} segundos")
                  labeltime.pack(pady=5)
                  
-             elif opcion == 2:
+                elif opcion == 2:
                  
                  start_time = time.time()
                  vmdin, vadin = subasta_programacion_dinamica(A, B, ofertas)
@@ -181,7 +194,7 @@ def subastaVentana():
                  end_time = time.time()
                  labeltime = tk.Label(contenedor_mostrar, text=f"Tiempo de ejecución: {end_time - start_time} segundos")
                  labeltime.pack(pady=5)
-             elif opcion == 3:
+                elif opcion == 3:
                  
                  start_time = time.time()
                  vmvoraz, mavoraz =subasta_voraz(A, B, ofertas)
