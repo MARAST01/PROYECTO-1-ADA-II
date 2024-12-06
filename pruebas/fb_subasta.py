@@ -140,7 +140,7 @@ params9 = [
 if __name__ == "__main__":
     # Lista para almacenar los tiempos de cada prueba
     tiempos = []
-    with open("dp_subasta.txt", "w") as archivo:
+    with open("fb_subasta.txt", "w") as archivo:
         archivo.write(f"{timeit.timeit(lambda: fuerza_bruta_sub(A1, B1, n1, params1), number=25)/25 * 1000}\n")
         print("prueba 1 terminada")
 
@@ -159,14 +159,14 @@ if __name__ == "__main__":
         archivo.write(f"{timeit.timeit(lambda: fuerza_bruta_sub(A6, B6, n6, params6), number=10)/10 * 1000}\n")
         print("prueba 6 terminada")
 
-        archivo.write(f"{timeit.timeit(lambda: fuerza_bruta_sub(A7, B7, n7, params7), number=10)/10 * 1000}\n")
-        print("prueba 7 terminada")
+        #archivo.write(f"{timeit.timeit(lambda: fuerza_bruta_sub(A7, B7, n7, params7), number=10)/10 * 1000}\n")
+        #print("prueba 7 terminada")
 
-        archivo.write(f"{timeit.timeit(lambda: fuerza_bruta_sub(A8, B8, n8, params8), number=10)/10 * 1000}\n")
-        print("prueba 8 terminada")
+        #archivo.write(f"{timeit.timeit(lambda: fuerza_bruta_sub(A8, B8, n8, params8), number=10)/10 * 1000}\n")
+        #print("prueba 8 terminada")
 
-        archivo.write(f"{timeit.timeit(lambda: fuerza_bruta_sub(A9, B9, n9, params9), number=10)/10 * 1000}\n")
-        print("prueba 9 terminada")
+        #archivo.write(f"{timeit.timeit(lambda: fuerza_bruta_sub(A9, B9, n9, params9), number=10)/10 * 1000}\n")
+        #print("prueba 9 terminada")
 
         print("pruebas terminadas")
 

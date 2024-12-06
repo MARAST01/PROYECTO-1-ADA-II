@@ -8,48 +8,46 @@ sys.path.append(ruta_proyecto)
 # Importa la función después de añadir la ruta
 from VORAZ.terminal_voraz import programacion_voraz
 import timeit
-
-#variables
+# Variables
 i = 1
 d = 2
-r = 3 
+r = 3
 a = 2
 k = 1
 
-palabra11 = "gato"        # 4 letras
-palabra12 = "luna"        # 4 letras
+# Casos de prueba con mayor complejidad
+palabra11 = "gatocris"        # Combinación compleja de letras
+palabra12 = "lunatiko"        # Introduce cambios mayores
 
-palabra21 = "perro"       # 5 letras 
-palabra22 = "flore"       # 5 letras
+palabra21 = "anperrito"         # Cambios intermedios
+palabra22 = "peflorear"         # Cambia más de un carácter por índice
 
-palabra31 = "piedra"      # 6 letras
-palabra32 = "sillas"       # 6 letras
+palabra31 = "capiedras"         # Sufijo añadido
+palabra32 = "doensillas"        # Prefijo añadido
 
-palabra41 = "reforma"     # 7 letras
-palabra42 = "ventana"     # 7 letras
+palabra41 = "carreformado"       # Sufijo extendido
+palabra42 = "delaventanas"       # Cambios en el prefijo
 
-palabra51 = "Camarero"    # 8 letras 
-palabra52 = "Medicina"     # 8 letras
+palabra51 = "camCamarerazo"      # Introduce sufijo grande
+palabra52 = "alwMedicinate"      # Prefijo y sufijo modificados
 
-palabra61 = "Mariposas"    # 9 letras
-palabra62 = "Guitarras"      # 9 letras
+palabra61 = "ifowMariposando"     # Agrega sufijo y cambia el centro
+palabra62 = "nicoGuitarrezas"     # Variación similar
 
-palabra71 = "Dificultad"    # 10 letras
-palabra72 = "Completado"    # 10 letras
+palabra71 = "JamasDificultades"    # Pluralización y sufijo añadido
+palabra72 = "siemprCompletandote"   # Cambios importantes
 
-palabra81 = "Dependencia"   # 11 letras
-palabra82 = "Absolutista"  # 11 letras
+palabra81 = "nosequeDependenciosa"   # Aumenta la longitud y cambia el significado
+palabra82 = "siqueseAbsolutismo"     # Cambia completamente el sufijo
 
-palabra91 = "Desperdiciar"  # 12 letras
-palabra92 = "Desperdicios"  # 12 letras
+palabra91 = "hitlercarDesperdiciando"  # Cambio progresivo
+palabra92 = "deleutiDesperdiciador"  # Cambia la forma verbal
 
-palabra101 = "Desorganizado"  # 13 letras
-palabra102 = "Desorganizada" # 13 letras
+palabra101 = "buenoporfinaDesorganizados" # Pluralización y longitud máxima
+palabra102 = "casiquenoterDesorganizando" # Cambia verbo y sufijo
 
-
-# main
+# Main
 if __name__ == "__main__":
-    # Lista para almacenar los tiempos de cada prueba
     with open("vz_terminal.txt", "w") as archivo:
         archivo.write(f"{timeit.timeit(lambda: programacion_voraz(palabra11, palabra12, i, d, r, a, k), number=50)/50 * 1000}\n")
         print("prueba 1 terminada")
@@ -81,4 +79,4 @@ if __name__ == "__main__":
         archivo.write(f"{timeit.timeit(lambda: programacion_voraz(palabra101, palabra102, i, d, r, a, k), number=50)/50 * 1000}\n")
         print("prueba 10 terminada")
 
-        print("pruebas terminadas")
+    print("pruebas terminadas")

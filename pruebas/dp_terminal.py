@@ -50,7 +50,7 @@ palabra102 = "Desorganizada" # 13 letras
 # main
 if __name__ == "__main__":
     # Lista para almacenar los tiempos de cada prueba
-    with open("fb_terminal.txt", "w") as archivo:
+    with open("dp_terminal.txt", "w") as archivo:
         archivo.write(f"{timeit.timeit(lambda: fuerza_bruta(palabra11, palabra12,0,0, i, d, r, a, k), number=50)/50 * 1000}\n")
         print("prueba 1 terminada")
 
@@ -69,16 +69,16 @@ if __name__ == "__main__":
         archivo.write(f"{timeit.timeit(lambda: fuerza_bruta(palabra61, palabra62,0,0, i, d, r, a, k), number=50)/50 * 1000}\n")
         print("prueba 6 terminada")
 
-        archivo.write(f"{timeit.timeit(lambda: fuerza_bruta(palabra71, palabra72,0,0, i, d, r, a, k), number=50)/50 * 1000}\n")
-        print("prueba 7 terminada")
+        #archivo.write(f"{timeit.timeit(lambda: fuerza_bruta(palabra71, palabra72,0,0, i, d, r, a, k), number=50)/50 * 1000}\n")
+        #print("prueba 7 terminada")
 
-        archivo.write(f"{timeit.timeit(lambda: fuerza_bruta(palabra81, palabra82,0,0, i, d, r, a, k), number=50)/50 * 1000}\n")
-        print("prueba 8 terminada")
+        #archivo.write(f"{timeit.timeit(lambda: fuerza_bruta(palabra81, palabra82,0,0, i, d, r, a, k), number=50)/50 * 1000}\n")
+        #print("prueba 8 terminada")
 
-        archivo.write(f"{timeit.timeit(lambda: fuerza_bruta(palabra91, palabra92,0,0, i, d, r, a, k), number=50)/50 * 1000}\n")
-        print("prueba 9 terminada")
+        #archivo.write(f"{timeit.timeit(lambda: fuerza_bruta(palabra91, palabra92,0,0, i, d, r, a, k), number=50)/50 * 1000}\n")
+        #print("prueba 9 terminada")
 
-        archivo.write(f"{timeit.timeit(lambda: fuerza_bruta(palabra101, palabra102,0,0, i, d, r, a, k), number=50)/50 * 1000}\n")
-        print("prueba 10 terminada")
+        #archivo.write(f"{timeit.timeit(lambda: fuerza_bruta(palabra101, palabra102,0,0, i, d, r, a, k), number=50)/50 * 1000}\n")
+        #print("prueba 10 terminada")
 
         print("pruebas terminadas")

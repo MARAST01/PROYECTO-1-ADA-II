@@ -69,16 +69,16 @@ if __name__ == "__main__":
         archivo.write(f"{timeit.timeit(lambda: programacion_dinamica(palabra61, palabra62, i, d, r, a, k), number=50)/50 * 1000}\n")
         print("prueba 6 terminada")
 
-        archivo.write(f"{timeit.timeit(lambda: programacion_dinamica(palabra71, palabra72, i, d, r, a, k), number=50)/50 * 1000}\n")
-        print("prueba 7 terminada")
+        #archivo.write(f"{timeit.timeit(lambda: programacion_dinamica(palabra71, palabra72, i, d, r, a, k), number=50)/50 * 1000}\n")
+        #print("prueba 7 terminada")
 
-        archivo.write(f"{timeit.timeit(lambda: programacion_dinamica(palabra81, palabra82, i, d, r, a, k), number=50)/50 * 1000}\n")
-        print("prueba 8 terminada")
+        #archivo.write(f"{timeit.timeit(lambda: programacion_dinamica(palabra81, palabra82, i, d, r, a, k), number=50)/50 * 1000}\n")
+        #print("prueba 8 terminada")
 
-        archivo.write(f"{timeit.timeit(lambda: programacion_dinamica(palabra91, palabra92, i, d, r, a, k), number=50)/50 * 1000}\n")
-        print("prueba 9 terminada")
+        #archivo.write(f"{timeit.timeit(lambda: programacion_dinamica(palabra91, palabra92, i, d, r, a, k), number=50)/50 * 1000}\n")
+        #print("prueba 9 terminada")
 
-        archivo.write(f"{timeit.timeit(lambda: programacion_dinamica(palabra101, palabra102, i, d, r, a, k), number=50)/50 * 1000}\n")
-        print("prueba 10 terminada")
+        #archivo.write(f"{timeit.timeit(lambda: programacion_dinamica(palabra101, palabra102, i, d, r, a, k), number=50)/50 * 1000}\n")
+        #print("prueba 10 terminada")
 
         print("pruebas terminadas")
